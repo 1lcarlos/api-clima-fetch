@@ -1,3 +1,5 @@
+import {appId} from './config.js'
+
 const container = document.querySelector(".container");
 const resultado = document.querySelector("#resultado");
 const formulario = document.querySelector("#formulario");
@@ -50,7 +52,7 @@ function mostrarError(mensaje) {
 }
 
 function consultarApi(ciudad, pais) {
-  const appId = "f257a171e195ae98dffdbda1552a411f";
+  
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appId}&lang=es`;
   fetch(url)
     .then((res) => res.json())
