@@ -52,6 +52,7 @@ function mostrarError(mensaje) {
 function consultarApi(ciudad, pais) {
   const appId = "f257a171e195ae98dffdbda1552a411f";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appId}&lang=es`;
+  spinner();
   fetch(url)
     .then((res) => res.json())
     .then((datos) => {
@@ -67,22 +68,63 @@ function consultarApi(ciudad, pais) {
 
 function mostrarClima(datos) {
   const {
-    main: { temp, tem_max, temp_min },
+    name,
+    main: { temp, temp_max, temp_min },
   } = datos;
-  const celcius = parseInt(temp - 273.15); 
+  const tempCelcius = kelvinACelcius(temp);
+  const tempMaxCelcius = kelvinACelcius(temp_max);
+  const tempMinCelcius = kelvinACelcius(temp_min);
+
+  const nombreCiudad = document.createElement("p");
+  nombreCiudad.innerHTML = `Clima en ${name} &#8451`;
+  nombreCiudad.classList.add("font-bold", "text-2xl");
 
   const actual = document.createElement("p");
-  actual.innerHTML = `${celcius} &#8451`;
+  actual.innerHTML = `${tempCelcius} &#8451`;
   actual.classList.add("font-bold", "text-6xl");
+
+  const max = document.createElement("p");
+  max.innerHTML = `Max: ${tempMaxCelcius} &#8451`;
+  max.classList.add("text-xl");
+
+  const min = document.createElement("p");
+  min.innerHTML = `Min: ${tempMinCelcius} &#8451`;
+  min.classList.add("text-xl");
 
   const resultadoDiv = document.createElement("div");
   resultadoDiv.classList.add("text-center", "text-white");
+
+  resultadoDiv.appendChild(nombreCiudad);
   resultadoDiv.appendChild(actual);
+  resultadoDiv.appendChild(max);
+  resultadoDiv.appendChild(min);
   resultado.appendChild(resultadoDiv);
 }
 
-function limpiarHTML(){
-  while(resultado.firstChild){
+function limpiarHTML() {
+  while (resultado.firstChild) {
     resultado.removeChild(resultado.firstChild);
   }
+}
+
+const kelvinACelcius = (temp) => parseInt(temp - 273.15);
+
+function spinner() {
+  limpiarHTML();
+  const divSpinner = document.createElement("div");
+  divSpinner.classList.add("sk-cube-grid");
+  divSpinner.innerHTML = `
+  
+      <div class="sk-cube sk-cube1"></div>
+      <div class="sk-cube sk-cube2"></div>
+      <div class="sk-cube sk-cube3"></div>
+      <div class="sk-cube sk-cube4"></div>
+      <div class="sk-cube sk-cube5"></div>
+      <div class="sk-cube sk-cube6"></div>
+      <div class="sk-cube sk-cube7"></div>
+      <div class="sk-cube sk-cube8"></div>
+      <div class="sk-cube sk-cube9"></div>
+
+  `;
+  resultado.appendChild(divSpinner);
 }
