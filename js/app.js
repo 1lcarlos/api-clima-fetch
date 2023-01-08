@@ -70,7 +70,7 @@ function mostrarClima(datos) {
   const {
     name,
     main: { temp, temp_max, temp_min },
-    coord: { lat, long },
+    coord: { lat, lon },
   } = datos;
   const tempCelcius = kelvinACelcius(temp);
   const tempMaxCelcius = kelvinACelcius(temp_max);
@@ -95,21 +95,13 @@ function mostrarClima(datos) {
   const resultadoDiv = document.createElement("div");
   resultadoDiv.classList.add("text-center", "text-white");
 
-  const mapaDiv = document.createElement("div");
-  mapaDiv.setAttribute("id", "map");
-
-  /* const map = L.map("map").setView([long, -lat], 5);
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution:
-      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  }).addTo(map); */
+  createMapa(lat, lon);
 
   resultadoDiv.appendChild(nombreCiudad);
   resultadoDiv.appendChild(actual);
   resultadoDiv.appendChild(max);
   resultadoDiv.appendChild(min);
-  resultadoDiv.appendChild(mapaDiv);
+  //resultadoDiv.appendChild(pintarMapa);
 
   resultado.appendChild(resultadoDiv);
 }
@@ -121,6 +113,15 @@ function limpiarHTML() {
 }
 
 const kelvinACelcius = (temp) => parseInt(temp - 273.15);
+
+const createMapa = (lat, long) => {
+  const map = L.map("map").setView([lat, long], 6);
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+    maxZoom: 19,
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  }).addTo(map);
+};
 
 function spinner() {
   limpiarHTML();
