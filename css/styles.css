@@ -11,6 +11,7 @@ html {
     #78c2d3
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+#map { height: 180px; }
 
 .sk-cube-grid {
   width: 40px;
