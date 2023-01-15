@@ -1,6 +1,7 @@
 const container = document.querySelector(".container");
 const resultado = document.querySelector("#resultado");
 const formulario = document.querySelector("#formulario");
+const containerMap = document.querySelector("#container-map");
 
 window.addEventListener("load", () => {
   formulario.addEventListener("submit", buscarClima);
@@ -56,7 +57,6 @@ function consultarApi(ciudad, pais) {
   fetch(url)
     .then((res) => res.json())
     .then((datos) => {
-      console.log(datos);
       limpiarHTML();
       if (datos.cod === "404") {
         mostrarError("Ciudad no encontrada");
@@ -101,7 +101,6 @@ function mostrarClima(datos) {
   resultadoDiv.appendChild(actual);
   resultadoDiv.appendChild(max);
   resultadoDiv.appendChild(min);
-  //resultadoDiv.appendChild(pintarMapa);
 
   resultado.appendChild(resultadoDiv);
 }
@@ -115,6 +114,10 @@ function limpiarHTML() {
 const kelvinACelcius = (temp) => parseInt(temp - 273.15);
 
 const createMapa = (lat, long) => {
+  limpiarMapa();
+  const divmapa = document.createElement("div");
+  divmapa.setAttribute("id", "map");
+  containerMap.appendChild(divmapa);
   const map = L.map("map").setView([lat, long], 6);
   L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
     maxZoom: 19,
@@ -122,6 +125,12 @@ const createMapa = (lat, long) => {
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
   }).addTo(map);
 };
+
+function limpiarMapa() {
+  while (containerMap.firstChild) {
+    containerMap.removeChild(containerMap.firstChild);
+  }
+}
 
 function spinner() {
   limpiarHTML();
