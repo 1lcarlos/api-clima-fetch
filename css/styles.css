@@ -2,13 +2,13 @@ html {
   background: #43cea2; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,
-    #149635,
-    #78c2d3
+    #df3333,
+    #4d6adf
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right,
-    #149635,
-    #78c2d3
+    #df3333,
+    #4d6adf
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 #map { height: 180px; }
